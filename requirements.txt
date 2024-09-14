@@ -1,0 +1,6 @@
+black==24.8.0
+fastapi[standard]==0.114.2
+isort==5.13.2
+pydantic-settings==2.5.2
+pylint==3.2.7
+uvicorn==0.30.6
