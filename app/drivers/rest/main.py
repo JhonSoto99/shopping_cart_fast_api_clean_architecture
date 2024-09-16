@@ -4,7 +4,10 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.models import Response
 
-from app.logger import logger
+from app.drivers.rest.exception_handlers import exception_container
+from app.drivers.rest.routers import product
+
+from .logger import logger
 
 app = FastAPI(
     docs_url="/api/docs",
@@ -61,3 +64,8 @@ async def log_requests(request: Request, call_next) -> Response:
     )
 
     return response
+
+
+app.include_router(product.router)
+
+exception_container(app)

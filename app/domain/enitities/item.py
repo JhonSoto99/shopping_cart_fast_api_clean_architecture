@@ -12,10 +12,12 @@ class ItemBase:
     stock: int
     id: UUID = field(default_factory=uuid4)
 
+
 @dataclass(kw_only=True)
 class Product(ItemBase):
     weight: float
     brand: str
+
 
 @dataclass(kw_only=True)
 class Event(ItemBase):
