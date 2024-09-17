@@ -1,6 +1,5 @@
 from typing import List
 
-from app.domain.enitities.item import Product
 from app.drivers.rest.routers.schema import ProductOutput
 from app.ports.repositories.product_repository import ProductRepository
 

@@ -1,8 +1,7 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 from app.drivers.rest.exception_handlers import exception_container
-from app.drivers.rest.routers import product
+from app.drivers.rest.routers import event, product, shopping_cart
 
 app = FastAPI(
     docs_url="/api/docs",
@@ -17,5 +16,7 @@ app.version = "0.0.1"
 
 
 app.include_router(product.router)
+app.include_router(event.router)
+app.include_router(shopping_cart.router)
 
 exception_container(app)

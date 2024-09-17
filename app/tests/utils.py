@@ -1,6 +1,8 @@
 from uuid import UUID, uuid4
 
-from app.domain.enitities.item import Product
+from black import datetime
+
+from app.domain.enitities.item import Event, Product
 
 
 def create_product(
@@ -22,4 +24,26 @@ def create_product(
         stock=stock,
         weight=weight,
         brand=brand,
+    )
+
+
+def create_event(
+    event_id: UUID | None = None,
+    price: int = 2000,
+    name: str = "Mentoría Desarrollo Personal",
+    thumbnail: str = "image.jpg",
+    description: str = "Eleva tu mente.",
+    organizer: str = "John Soto",
+    event_date: datetime = datetime.now(),
+    venue: str = "Cali, Colombia",
+) -> Event:
+    return Event(
+        id=event_id if event_id else uuid4(),
+        price=price,
+        name=name,
+        thumbnail=thumbnail,
+        description=description,
+        organizer=organizer,
+        event_date=event_date,
+        venue=venue,
     )
