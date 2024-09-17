@@ -26,3 +26,17 @@ class ProductInput(BaseModel):
             weight=self.weight,
             brand=self.brand,
         )
+
+
+class ProductOutput(BaseModel):
+    id: UUID
+    price: float
+    name: str
+    thumbnail: str
+    description: str
+    stock: int
+    weight: float
+    brand: str
+
+    class Config:
+        orm_mode = True

@@ -1,9 +1,10 @@
 from abc import ABC
-from typing import Any
+from typing import Any, List
 from uuid import UUID
 
 from bson import Binary
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.errors import PyMongoError
 
 from app.adapters.exceptions import DatabaseError
 from app.domain.enitities.item import Product
@@ -14,12 +15,17 @@ class MongoProductRepository(ProductRepository):
     def __init__(self, client: AsyncIOMotorClient):
         self.collection = client.products.product
 
-    async def get(self, **filters: Any) -> Product | None:
+    async def get_all(self, **filters: Any) -> List[Product]:
         filters = self.__get_filters(filters)
         try:
-            document = await self.collection.find_one(filters)
-            return self.__to_product_entity(document) if document else None
-        except Exception as e:
+            cursor = self.collection.find(filters)
+            documents = await cursor.to_list(
+                length=None
+            )  # Convertir el cursor a una lista
+            return [
+                self.__to_product_entity(document) for document in documents
+            ]
+        except PyMongoError as e:
             raise DatabaseError(e)
 
     async def add(self, product: Product) -> bool:

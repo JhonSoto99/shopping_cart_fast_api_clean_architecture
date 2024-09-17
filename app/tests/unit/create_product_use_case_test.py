@@ -15,18 +15,6 @@ from app.use_cases.exceptions import (
 )
 
 
-@pytest.fixture
-def products_repository() -> ProductRepository:
-    return InMemoryProductRepository()
-
-
-@pytest.fixture
-def create_product_use_case(
-    products_repository: ProductRepository,
-) -> CreateProductUseCase:
-    return CreateProductUseCase(products_repository)
-
-
 @pytest.mark.asyncio
 async def test_add_valid_product(create_product_use_case: CreateProductUseCase):
     product = create_product()

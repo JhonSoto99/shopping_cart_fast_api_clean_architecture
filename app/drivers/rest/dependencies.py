@@ -9,6 +9,7 @@ from app.adapters.repositories.product_repository.mongodb_repository import (
 )
 from app.ports.repositories.product_repository import ProductRepository
 from app.use_cases.create_product_use_case import CreateProductUseCase
+from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
 
 
 @lru_cache
@@ -28,3 +29,11 @@ def get_created_product_use_case(
     ],
 ) -> CreateProductUseCase:
     return CreateProductUseCase(product_repository)
+
+
+def get_all_products_use_case(
+    product_repository: Annotated[
+        ProductRepository, Depends(get_product_repository)
+    ],
+) -> GetAllProductsUseCase:
+    return GetAllProductsUseCase(product_repository)

@@ -1,12 +1,13 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, List
 
 from app.domain.enitities.item import Product
+from app.drivers.rest.routers.schema import ProductOutput
 
 
 class ProductRepository(ABC):
     @abstractmethod
-    async def get(self, **filters: Any) -> Product | None:
+    async def get_all(self) -> List[ProductOutput]:
         pass
 
     @abstractmethod
