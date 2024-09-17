@@ -17,9 +17,5 @@ class ProductRepository(ABC):
         pass
 
     @abstractmethod
-    async def get_by_id(self, event_id: UUID) -> CartItem:
-        pass
-
-    @abstractmethod
     async def add(self, product: Product) -> bool:
         pass

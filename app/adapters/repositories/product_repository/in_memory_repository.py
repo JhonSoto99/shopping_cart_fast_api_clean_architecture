@@ -1,6 +1,5 @@
 from itertools import product
-from typing import Any
-from typing import List
+from typing import Any, List
 from uuid import UUID
 
 from app.domain.enitities.item import Product
@@ -18,9 +17,6 @@ class InMemoryProductRepository(ProductRepository):
             if (f := filters.get("id")) and f == product.id:
                 return product
         return None
-
-    async def get_by_id(self, product_id: UUID) -> Product:
-        return next((product for product in self.products if product.id == product_id), None)
 
     async def get_all(self) -> List[Product]:
         return self.products

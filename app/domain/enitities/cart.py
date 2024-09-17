@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Union
-from typing import Literal
+from typing import List, Literal, Union
 from uuid import UUID, uuid4
 
 from app.domain.enitities.item import Event, Product

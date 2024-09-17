@@ -1,9 +1,7 @@
-from typing import Any, List
-from typing import Optional
+from typing import Any, List, Optional
 from uuid import UUID
 
-from bson import Binary
-from bson import ObjectId
+from bson import Binary, ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import PyMongoError
 
@@ -34,17 +32,6 @@ class MongoEventRepository(EventRepository):
             return [self.__to_event_entity(document) for document in documents]
         except PyMongoError as e:
             raise DatabaseError(e)
-
-    async def get_by_id(self, event_id: str) -> Optional[Event]:
-        try:
-            document = self.collection.find_one({"_id": ObjectId(event_id)})
-            if document:
-                return self.__to_event_entity(document)  # Convertir el documento a entidad de producto
-            return None
-        except PyMongoError as e:
-            raise DatabaseError(e)
-        except Exception as e:
-            raise ValueError(f"Invalid ObjectId: {event_id}")
 
     async def add(self, event: Event) -> bool:
         try:

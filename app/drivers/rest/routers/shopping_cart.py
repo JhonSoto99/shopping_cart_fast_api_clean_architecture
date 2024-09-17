@@ -10,8 +10,8 @@ from app.drivers.rest.dependencies import (
     get_shopping_cart_repository,
     get_shopping_cart_use_case,
 )
-from app.drivers.rest.routers.schema import AddItemToCartRequest
 from app.drivers.rest.routers.schema import (
+    AddItemToCartRequest,
     CartItemOutput,
     ShoppingCartOutput,
 )
@@ -41,7 +41,7 @@ async def get_shopping_cart(
 ) -> ShoppingCartOutput:
     shopping_cart = await use_case()
 
-    print('shopping_cart', shopping_cart.items)
+    print("shopping_cart", shopping_cart.items)
 
     items = [
         CartItemOutput(
@@ -49,7 +49,7 @@ async def get_shopping_cart(
             name=item.name,
             quantity=item.quantity,
             item_type="Product" if isinstance(item, Product) else "Event",
-            price=item.price
+            price=item.price,
         )
         for item in shopping_cart.items
     ]

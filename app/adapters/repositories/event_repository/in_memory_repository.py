@@ -1,5 +1,4 @@
-from typing import Any
-from typing import List
+from typing import Any, List
 from uuid import UUID
 
 from app.domain.enitities.item import Event
@@ -17,10 +16,6 @@ class InMemoryEventRepository(EventRepository):
 
     def clear(self):
         self.events = []
-
-    async def get_by_id(self, event_id: UUID) -> Event:
-        return next((event for event in self.events if event.id == event_id), None)
-
 
     async def get_all(self) -> List[Event]:
         return self.events

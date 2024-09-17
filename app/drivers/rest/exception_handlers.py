@@ -2,8 +2,10 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
 from app.adapters.exceptions import ExternalError
-from app.use_cases.exceptions import InvalidProductPriceError
-from app.use_cases.exceptions import NonPositiveWeightError
+from app.use_cases.exceptions import (
+    InvalidProductPriceError,
+    NonPositiveWeightError,
+)
 
 
 def exception_container(app: FastAPI) -> None:

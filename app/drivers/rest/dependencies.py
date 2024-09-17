@@ -79,17 +79,13 @@ def get_created_item_to_cart_use_case(
     shopping_cart_repository: Annotated[
         ShoppingCartRepository, Depends(get_shopping_cart_repository)
     ],
-    event_repository: Annotated[
-        EventRepository, Depends(get_event_repository)
-    ],
+    event_repository: Annotated[EventRepository, Depends(get_event_repository)],
     product_repository: Annotated[
         ProductRepository, Depends(get_product_repository)
     ],
 ) -> CreateCartUseCase:
     return CreateCartUseCase(
-        shopping_cart_repository,
-        event_repository,
-        product_repository
+        shopping_cart_repository, event_repository, product_repository
     )
 
 

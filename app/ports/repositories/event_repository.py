@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
-from typing import List
+from typing import Any, List
 from uuid import UUID
 
 from app.domain.enitities.cart import CartItem
@@ -15,10 +14,6 @@ class EventRepository(ABC):
 
     @abstractmethod
     async def get_all(self) -> List[EventOutput]:
-        pass
-
-    @abstractmethod
-    async def get_by_id(self, event_id: UUID) -> CartItem:
         pass
 
     @abstractmethod

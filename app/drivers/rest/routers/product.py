@@ -7,8 +7,7 @@ from app.drivers.rest.dependencies import (
     get_all_products_use_case,
     get_created_product_use_case,
 )
-from app.drivers.rest.routers.schema import ProductCreate
-from app.drivers.rest.routers.schema import ProductOutput
+from app.drivers.rest.routers.schema import ProductCreate, ProductOutput
 from app.use_cases.create_product_use_case import CreateProductUseCase
 from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
 
