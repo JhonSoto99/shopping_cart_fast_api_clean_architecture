@@ -24,6 +24,7 @@ from app.use_cases.delete_item_cart_case_use import DeleteItemCartUseCase
 from app.use_cases.get_all_events_use_case import GetAllEventsUseCase
 from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
 from app.use_cases.get_shopping_cart_case_use import GetShoppingCartUseCase
+from app.use_cases.update_item_cart_case_use import UpdateItemQuantityUseCase
 
 
 @lru_cache
@@ -115,3 +116,17 @@ def get_shopping_cart_use_case(
     ],
 ) -> GetShoppingCartUseCase:
     return GetShoppingCartUseCase(shopping_cart_repository)
+
+
+def get_update_item_quantity_use_case(
+    shopping_cart_repository: Annotated[
+        ShoppingCartRepository, Depends(get_shopping_cart_repository)
+    ],
+    event_repository: Annotated[EventRepository, Depends(get_event_repository)],
+    product_repository: Annotated[
+        ProductRepository, Depends(get_product_repository)
+    ],
+) -> UpdateItemQuantityUseCase:
+    return UpdateItemQuantityUseCase(
+        shopping_cart_repository, event_repository, product_repository
+    )

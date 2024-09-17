@@ -106,3 +106,9 @@ class AddItemToCartRequest(BaseModel):
 class DeleteItemFromCartRequest(BaseModel):
     item_id: UUID
     item_type: Literal["product", "event"]
+
+
+class UpdateItemQuantityRequest(BaseModel):
+    item_id: UUID
+    item_type: str
+    new_quantity: int
