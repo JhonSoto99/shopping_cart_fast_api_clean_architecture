@@ -46,6 +46,7 @@ class EventOutput(BaseModel):
     id: UUID
     price: int
     name: str
+    stock: int
     thumbnail: str
     description: str
     organizer: str
@@ -59,6 +60,7 @@ class EventOutput(BaseModel):
 class EventCreate(BaseModel):
     price: int
     name: str
+    stock: int
     thumbnail: str
     description: str
     organizer: str
@@ -68,6 +70,7 @@ class EventCreate(BaseModel):
     def to_entity(self) -> Event:
         return Event(
             price=self.price,
+            stock=self.stock,
             name=self.name,
             thumbnail=self.thumbnail,
             description=self.description,
@@ -78,6 +81,7 @@ class EventCreate(BaseModel):
 
 
 class CartItemOutput(BaseModel):
+    item_id: UUID
     name: str
     price: int
     quantity: int
@@ -93,5 +97,7 @@ class ShoppingCartOutput(BaseModel):
 
 class AddItemToCartRequest(BaseModel):
     item_id: UUID
-    quantity: int
+    quantity: int = Field(
+        ..., gt=0, description="Quantity must be greater than 0"
+    )
     item_type: Literal["product", "event"]

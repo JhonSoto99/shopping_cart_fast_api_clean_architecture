@@ -9,6 +9,12 @@ from app.drivers.rest.routers.schema import ProductOutput
 
 class ProductRepository(ABC):
     @abstractmethod
+    async def update_stock(
+        self, product_id: UUID, new_stock: int
+    ) -> CartItem | None:
+        pass
+
+    @abstractmethod
     async def get(self, **filters: Any) -> CartItem | None:
         pass
 

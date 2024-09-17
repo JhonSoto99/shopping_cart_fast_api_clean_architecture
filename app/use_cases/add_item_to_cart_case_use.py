@@ -7,6 +7,7 @@ from app.ports.repositories.product_repository import ProductRepository
 from app.tests.integration.repositories.mongodb_event_repository_test import (
     event_repository,
 )
+from app.use_cases.exceptions import InsufficientStockError, ItemNotFoundError
 
 
 class CreateCartUseCase:
@@ -31,6 +32,29 @@ class CreateCartUseCase:
             item = await self.event_repository.get(id=item_id)
 
         if item is None:
-            raise ValueError("Item not found")
+            raise ItemNotFoundError()
 
-        await self.shopping_cart_repository.add_item_to_cart(item, quantity)
+        if item.stock < quantity:
+            raise InsufficientStockError()
+
+        new_stock = item.stock - quantity
+
+        if item_type == "product":
+            await self.product_repository.update_stock(item_id, new_stock)
+
+        elif item_type == "event":
+            await self.event_repository.update_stock(item_id, new_stock)
+
+        # Verifica si el ítem ya existe en el carrito
+        existing_item = await self.shopping_cart_repository.get_item(
+            item_id, item_type
+        )
+
+        if existing_item:
+            # Si el ítem ya existe en el carrito, suma la cantidad
+            new_quantity = existing_item.quantity + quantity
+            await self.shopping_cart_repository.update_item_quantity(
+                item_id, item_type, new_quantity
+            )
+        else:
+            await self.shopping_cart_repository.add_item_to_cart(item, quantity)

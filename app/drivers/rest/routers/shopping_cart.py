@@ -46,6 +46,7 @@ async def get_shopping_cart(
     items = [
         CartItemOutput(
             item=item,
+            item_id=item.id,
             name=item.name,
             quantity=item.quantity,
             item_type="Product" if isinstance(item, Product) else "Event",

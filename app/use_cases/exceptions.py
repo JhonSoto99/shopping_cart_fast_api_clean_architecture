@@ -45,3 +45,19 @@ class EmptyBrandError(CustomError):
 
     def __str__(self) -> str:
         return "The product brand must not be empty."
+
+
+class ItemNotFoundError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "Item not found."
+
+
+class InsufficientStockError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "Not enough stock for product."

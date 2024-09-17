@@ -9,11 +9,23 @@ from pymongo.errors import PyMongoError
 from app.adapters.exceptions import DatabaseError
 from app.domain.enitities.item import Product
 from app.ports.repositories.product_repository import ProductRepository
+from app.use_cases.exceptions import ItemNotFoundError
 
 
 class MongoProductRepository(ProductRepository):
     def __init__(self, client: AsyncIOMotorClient):
         self.collection = client.products.product
+
+    async def update_stock(self, product_id: UUID, new_stock: int) -> None:
+        try:
+            result = await self.collection.update_one(
+                {"_id": Binary.from_uuid(product_id)},
+                {"$set": {"stock": new_stock}},
+            )
+            if result.matched_count == 0:
+                raise ItemNotFoundError()
+        except PyMongoError as e:
+            raise DatabaseError(e)
 
     async def get(self, **filters: Any) -> Product | None:
         filters = self.__get_filters(filters)

@@ -8,6 +8,12 @@ from app.ports.repositories.event_repository import EventRepository
 class InMemoryEventRepository(EventRepository):
     events: List[Event] = []
 
+    async def update_stock(self, event_id: UUID, new_stock: int):
+        for event in self.events:
+            if event.id == event_id:
+                event.stock = new_stock
+                return
+
     async def get(self, **filters: Any) -> Event | None:
         for event in self.events:
             if (f := filters.get("id")) and f == event.id:

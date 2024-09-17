@@ -8,11 +8,23 @@ from pymongo.errors import PyMongoError
 from app.adapters.exceptions import DatabaseError
 from app.domain.enitities.item import Event
 from app.ports.repositories.event_repository import EventRepository
+from app.use_cases.exceptions import ItemNotFoundError
 
 
 class MongoEventRepository(EventRepository):
     def __init__(self, client: AsyncIOMotorClient):
         self.collection = client.events.event
+
+    async def update_stock(self, event_id: UUID, new_stock: int):
+        try:
+            result = await self.collection.update_one(
+                {"_id": Binary.from_uuid(event_id)},
+                {"$set": {"stock": new_stock}},
+            )
+            if result.matched_count == 0:
+                raise ItemNotFoundError()
+        except PyMongoError as e:
+            raise DatabaseError(e)
 
     async def get(self, **filters: Any) -> Event | None:
         filters = self.__get_filters(filters)
@@ -52,6 +64,7 @@ class MongoEventRepository(EventRepository):
         return {
             "_id": Binary.from_uuid(event.id),
             "price": event.price,
+            "stock": event.stock,
             "name": event.name,
             "thumbnail": event.thumbnail,
             "description": event.description,
@@ -64,6 +77,7 @@ class MongoEventRepository(EventRepository):
         return Event(
             id=UUID(bytes=obj["_id"]),
             price=obj["price"],
+            stock=obj["stock"],
             name=obj["name"],
             thumbnail=obj["thumbnail"],
             description=obj["description"],

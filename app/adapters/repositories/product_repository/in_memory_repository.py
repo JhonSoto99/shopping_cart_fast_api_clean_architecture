@@ -9,6 +9,12 @@ from app.ports.repositories.product_repository import ProductRepository
 class InMemoryProductRepository(ProductRepository):
     products: List[Product] = []
 
+    async def update_stock(self, product_id: UUID, new_stock: int):
+        for product in self.products:
+            if product.id == product_id:
+                product.stock = new_stock
+                return
+
     def clear(self):
         self.products = []
 
