@@ -10,5 +10,5 @@ class ShoppingCartRepository(ABC):
         pass
 
     @abstractmethod
-    async def add_item_to_cart(self, cart_item: CartItem) -> bool:
+    async def add_item_to_cart(self, cart_item: CartItem, quantity: int) -> bool:
         pass

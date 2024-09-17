@@ -6,7 +6,8 @@ from app.drivers.rest.dependencies import (
     get_all_events_use_case,
     get_created_event_use_case,
 )
-from app.drivers.rest.routers.schema import EventInput, EventOutput
+from app.drivers.rest.routers.schema import EventCreate
+from app.drivers.rest.routers.schema import EventOutput
 from app.use_cases.create_event_use_case import CreateEventUseCase
 from app.use_cases.get_all_events_use_case import GetAllEventsUseCase
 
@@ -15,7 +16,7 @@ router = APIRouter(prefix="/events")
 
 @router.post("/create", status_code=status.HTTP_204_NO_CONTENT)
 async def create_event(
-    data: EventInput,
+    data: EventCreate,
     use_case: Annotated[
         CreateEventUseCase, Depends(get_created_event_use_case)
     ],

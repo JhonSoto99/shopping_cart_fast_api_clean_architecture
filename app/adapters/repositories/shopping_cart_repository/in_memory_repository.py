@@ -12,6 +12,7 @@ class InMemoryShoppingCartRepository(ShoppingCartRepository):
     async def get(self) -> ShoppingCart:
         return self.shopping_cart
 
-    async def add_item_to_cart(self, cart_item: CartItem) -> bool:
+    async def add_item_to_cart(self, cart_item: CartItem, quantity: int) -> bool:
+        cart_item.quantity = quantity
         self.shopping_cart.items.append(cart_item)
         return True

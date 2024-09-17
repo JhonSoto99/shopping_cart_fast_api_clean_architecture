@@ -13,6 +13,7 @@ from app.adapters.repositories.product_repository.mongodb_repository import (
 from app.adapters.repositories.shopping_cart_repository.in_memory_repository import (
     InMemoryShoppingCartRepository,
 )
+from app.domain.enitities.item import Product
 from app.ports.repositories.cart_repository import ShoppingCartRepository
 from app.ports.repositories.event_repository import EventRepository
 from app.ports.repositories.product_repository import ProductRepository
@@ -78,8 +79,18 @@ def get_created_item_to_cart_use_case(
     shopping_cart_repository: Annotated[
         ShoppingCartRepository, Depends(get_shopping_cart_repository)
     ],
+    event_repository: Annotated[
+        EventRepository, Depends(get_event_repository)
+    ],
+    product_repository: Annotated[
+        ProductRepository, Depends(get_product_repository)
+    ],
 ) -> CreateCartUseCase:
-    return CreateCartUseCase(shopping_cart_repository)
+    return CreateCartUseCase(
+        shopping_cart_repository,
+        event_repository,
+        product_repository
+    )
 
 
 def get_shopping_cart_use_case(

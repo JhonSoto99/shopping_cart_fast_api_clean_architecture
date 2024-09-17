@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, Union
+from typing import Literal
 from uuid import UUID, uuid4
 
 from app.domain.enitities.item import Event, Product
@@ -7,8 +8,11 @@ from app.domain.enitities.item import Event, Product
 
 @dataclass(kw_only=True)
 class CartItem:
+    name: str
     item: Union[Product, Event]  # Puede ser un producto o un evento
     quantity: int
+    item_type: Literal["product", "event"]
+    price: int
 
 
 @dataclass(kw_only=True)
