@@ -28,3 +28,9 @@ class ShoppingCartRepository(ABC):
         self, item_id: UUID, item_type: str, new_quantity: int
     ) -> None:
         pass
+
+    @abstractmethod
+    async def remove_item_from_cart(
+        self, item_id: UUID, item_type: str
+    ) -> bool:
+        pass

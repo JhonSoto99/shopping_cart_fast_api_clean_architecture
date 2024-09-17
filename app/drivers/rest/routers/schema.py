@@ -101,3 +101,8 @@ class AddItemToCartRequest(BaseModel):
         ..., gt=0, description="Quantity must be greater than 0"
     )
     item_type: Literal["product", "event"]
+
+
+class DeleteItemFromCartRequest(BaseModel):
+    item_id: UUID
+    item_type: Literal["product", "event"]

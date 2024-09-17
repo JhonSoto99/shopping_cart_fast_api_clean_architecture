@@ -15,7 +15,7 @@ class ProductRepository(ABC):
         pass
 
     @abstractmethod
-    async def get(self, **filters: Any) -> CartItem | None:
+    async def get(self, **filters: Any) -> Product | None:
         pass
 
     @abstractmethod

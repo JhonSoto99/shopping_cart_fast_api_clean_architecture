@@ -4,11 +4,21 @@ from uuid import UUID
 from app.domain.enitities.cart import CartItem, ShoppingCart
 from app.drivers.rest.routers.schema import ShoppingCartOutput
 from app.ports.repositories.cart_repository import ShoppingCartRepository
+from app.ports.repositories.event_repository import EventRepository
+from app.ports.repositories.product_repository import ProductRepository
 from app.use_cases.exceptions import ItemNotFoundError
 
 
 class InMemoryShoppingCartRepository(ShoppingCartRepository):
     shopping_cart = ShoppingCart()
+
+    def __init__(
+        self,
+        product_repository: ProductRepository,
+        event_repository: EventRepository,
+    ):
+        self.event_repository = event_repository
+        self.product_repository = product_repository
 
     def clear(self):
         self.shopping_cart: ShoppingCart
@@ -41,3 +51,12 @@ class InMemoryShoppingCartRepository(ShoppingCartRepository):
             item.quantity = new_quantity
         else:
             raise ItemNotFoundError()
+
+    async def remove_item_from_cart(
+        self, item_id: UUID, item_type: str
+    ) -> None:
+        self.shopping_cart.items = [
+            item
+            for item in self.shopping_cart.items
+            if not (item.id == item_id)
+        ]

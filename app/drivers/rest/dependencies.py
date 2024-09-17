@@ -20,6 +20,7 @@ from app.ports.repositories.product_repository import ProductRepository
 from app.use_cases.add_item_to_cart_case_use import CreateCartUseCase
 from app.use_cases.create_event_use_case import CreateEventUseCase
 from app.use_cases.create_product_use_case import CreateProductUseCase
+from app.use_cases.delete_item_cart_case_use import DeleteItemCartUseCase
 from app.use_cases.get_all_events_use_case import GetAllEventsUseCase
 from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
 from app.use_cases.get_shopping_cart_case_use import GetShoppingCartUseCase
@@ -70,12 +71,17 @@ def get_all_events_use_case(
     return GetAllEventsUseCase(event_repository)
 
 
-def get_shopping_cart_repository() -> InMemoryShoppingCartRepository:
+def get_shopping_cart_repository(
+    event_repository: Annotated[EventRepository, Depends(get_event_repository)],
+    product_repository: Annotated[
+        ProductRepository, Depends(get_product_repository)
+    ],
+) -> InMemoryShoppingCartRepository:
     # Inicializar o devolver un repositorio en memoria
-    return InMemoryShoppingCartRepository()
+    return InMemoryShoppingCartRepository(product_repository, event_repository)
 
 
-def get_created_item_to_cart_use_case(
+def get_create_item_to_cart_use_case(
     shopping_cart_repository: Annotated[
         ShoppingCartRepository, Depends(get_shopping_cart_repository)
     ],
@@ -85,6 +91,20 @@ def get_created_item_to_cart_use_case(
     ],
 ) -> CreateCartUseCase:
     return CreateCartUseCase(
+        shopping_cart_repository, event_repository, product_repository
+    )
+
+
+def get_delete_item_to_cart_use_case(
+    shopping_cart_repository: Annotated[
+        ShoppingCartRepository, Depends(get_shopping_cart_repository)
+    ],
+    event_repository: Annotated[EventRepository, Depends(get_event_repository)],
+    product_repository: Annotated[
+        ProductRepository, Depends(get_product_repository)
+    ],
+) -> DeleteItemCartUseCase:
+    return DeleteItemCartUseCase(
         shopping_cart_repository, event_repository, product_repository
     )
 
