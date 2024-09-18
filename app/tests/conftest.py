@@ -25,7 +25,7 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def client():
-    return AsyncIOMotorClient("mongodb://localhost:27017")
+    return AsyncIOMotorClient("mongodb://mongo-events:27017")
 
 
 @pytest.fixture
