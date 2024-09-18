@@ -2,12 +2,12 @@ from app.domain.enitities.item import Product
 from app.ports.repositories.product_repository import ProductRepository
 from app.use_cases.exceptions import (
     EmptyBrandError,
+    EmptyProductDescriptionError,
     EmptyProductNameError,
+    EmptyProductThumbnailError,
     InvalidProductPriceError,
     NegativeStockError,
     NonPositiveWeightError,
-    EmptyProductThumbnailError,
-    EmptyProductDescriptionError
 )
 
 

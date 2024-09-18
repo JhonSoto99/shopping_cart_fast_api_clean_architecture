@@ -4,9 +4,12 @@ from fastapi.responses import JSONResponse
 from app.adapters.exceptions import ExternalError
 from app.use_cases.exceptions import (
     EmptyBrandError,
+    EmptyEventDateError,
+    EmptyEventOrganizerError,
     EmptyProductDescriptionError,
     EmptyProductNameError,
     EmptyProductThumbnailError,
+    EmptyVenueError,
     InsufficientStockError,
     InvalidProductPriceError,
     ItemNotFoundError,
@@ -104,5 +107,32 @@ def exception_container(app: FastAPI) -> None:
     ) -> JSONResponse:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
+            content={"message": str(exc)},
+        )
+
+    @app.exception_handler(EmptyEventOrganizerError)
+    async def empty_event_organizer_error_exception_handler(
+        request: Request, exc: EmptyEventOrganizerError
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content={"message": str(exc)},
+        )
+
+    @app.exception_handler(EmptyEventDateError)
+    async def empty_event_date_error_exception_handler(
+        request: Request, exc: EmptyEventDateError
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content={"message": str(exc)},
+        )
+
+    @app.exception_handler(EmptyVenueError)
+    async def empty_event_venue_error_exception_handler(
+        request: Request, exc: EmptyVenueError
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content={"message": str(exc)},
         )

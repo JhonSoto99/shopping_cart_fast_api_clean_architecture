@@ -1,11 +1,14 @@
 from app.domain.enitities.item import Event
 from app.ports.repositories.event_repository import EventRepository
 from app.use_cases.exceptions import (
-    EmptyBrandError,
+    EmptyEventDateError,
+    EmptyEventOrganizerError,
+    EmptyProductDescriptionError,
     EmptyProductNameError,
+    EmptyProductThumbnailError,
+    EmptyVenueError,
     InvalidProductPriceError,
     NegativeStockError,
-    NonPositiveWeightError,
 )
 
 
@@ -20,7 +23,22 @@ class CreateEventUseCase:
         if not event.name:
             raise EmptyProductNameError()
 
+        if event.stock < 0:
+            raise NegativeStockError()
+
+        if not event.thumbnail:
+            raise EmptyProductThumbnailError()
+
+        if not event.description:
+            raise EmptyProductDescriptionError()
+
         if not event.organizer:
-            raise EmptyProductNameError()
+            raise EmptyEventOrganizerError()
+
+        if not event.event_date:
+            raise EmptyEventDateError()
+
+        if not event.venue:
+            raise EmptyVenueError()
 
         await self.event_repository.add(event)

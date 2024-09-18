@@ -63,6 +63,30 @@ class EmptyBrandError(CustomError):
         return "The product brand must not be empty."
 
 
+class EmptyEventOrganizerError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "The event organizer must not be empty."
+
+
+class EmptyEventDateError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "The event event_date must not be empty."
+
+
+class EmptyVenueError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "The event venue must not be empty."
+
+
 class ItemNotFoundError(CustomError):
     def __init__(self):
         pass
