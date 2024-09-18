@@ -97,8 +97,8 @@ class ShoppingCartOutput(BaseModel):
     def calculate_totals(self):
         total = 0
         for item in self.items:
-            item.subtotal = item.quantity * item.price
-            total += item.subtotal
+            subtotal = item.quantity * item.price
+            total += subtotal
         return total
 
 
