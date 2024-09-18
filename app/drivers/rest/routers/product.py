@@ -14,7 +14,11 @@ from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
 router = APIRouter(prefix="/products")
 
 
-@router.post("/create", status_code=status.HTTP_204_NO_CONTENT)
+@router.post(
+    "/create",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Productos"]
+)
 async def create_product(
     data: ProductCreate,
     use_case: Annotated[
@@ -25,7 +29,10 @@ async def create_product(
 
 
 @router.get(
-    "/", response_model=List[ProductOutput], status_code=status.HTTP_200_OK
+    "/",
+    response_model=List[ProductOutput],
+    status_code=status.HTTP_200_OK,
+    tags=["Productos"]
 )
 async def get_products(
     use_case: Annotated[

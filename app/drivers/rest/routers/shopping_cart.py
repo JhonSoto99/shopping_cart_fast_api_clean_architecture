@@ -29,7 +29,11 @@ from app.use_cases.update_item_cart_case_use import UpdateItemQuantityUseCase
 router = APIRouter(prefix="/shopping-cart")
 
 
-@router.post("/add-item", status_code=status.HTTP_204_NO_CONTENT)
+@router.post(
+    "/add-item",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Carrito de Compras"]
+)
 async def add_item(
     data: AddItemToCartRequest,
     use_case: Annotated[
@@ -39,27 +43,11 @@ async def add_item(
     await use_case(data.item_id, data.item_type, data.quantity)
 
 
-@router.delete("/remove-item", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_item(
-    data: DeleteItemFromCartRequest,
-    use_case: Annotated[
-        DeleteItemCartUseCase, Depends(get_delete_item_to_cart_use_case)
-    ],
-) -> None:
-    await use_case(data.item_id, data.item_type)
-
-
-@router.patch("/update-item-quantity", status_code=status.HTTP_204_NO_CONTENT)
-async def update_item_quantity(
-    data: UpdateItemQuantityRequest,
-    use_case: Annotated[
-        UpdateItemQuantityUseCase, Depends(get_update_item_quantity_use_case)
-    ],
-) -> None:
-    await use_case(data.item_id, data.item_type, data.new_quantity)
-
-
-@router.get("/get", status_code=status.HTTP_200_OK)
+@router.get(
+    "/get",
+    status_code=status.HTTP_200_OK,
+    tags=["Carrito de Compras"]
+)
 async def get_shopping_cart(
     use_case: Annotated[
         GetShoppingCartUseCase, Depends(get_shopping_cart_use_case)
@@ -80,3 +68,31 @@ async def get_shopping_cart(
     ]
 
     return ShoppingCartOutput(items=items)
+
+
+@router.patch(
+    "/update-item-quantity",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Carrito de Compras"]
+)
+async def update_item_quantity(
+    data: UpdateItemQuantityRequest,
+    use_case: Annotated[
+        UpdateItemQuantityUseCase, Depends(get_update_item_quantity_use_case)
+    ],
+) -> None:
+    await use_case(data.item_id, data.item_type, data.new_quantity)
+
+
+@router.delete(
+    "/remove-item",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Carrito de Compras"]
+)
+async def remove_item(
+    data: DeleteItemFromCartRequest,
+    use_case: Annotated[
+        DeleteItemCartUseCase, Depends(get_delete_item_to_cart_use_case)
+    ],
+) -> None:
+    await use_case(data.item_id, data.item_type)

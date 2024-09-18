@@ -13,7 +13,11 @@ from app.use_cases.get_all_events_use_case import GetAllEventsUseCase
 router = APIRouter(prefix="/events")
 
 
-@router.post("/create", status_code=status.HTTP_204_NO_CONTENT)
+@router.post(
+    "/create",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Eventos"],
+)
 async def create_event(
     data: EventCreate,
     use_case: Annotated[
@@ -24,7 +28,10 @@ async def create_event(
 
 
 @router.get(
-    "/", response_model=List[EventOutput], status_code=status.HTTP_200_OK
+    "/",
+    response_model=List[EventOutput],
+    status_code=status.HTTP_200_OK,
+    tags=["Eventos"],
 )
 async def get_events(
     use_case: Annotated[GetAllEventsUseCase, Depends(get_all_events_use_case)],
