@@ -110,5 +110,5 @@ class DeleteItemFromCartRequest(BaseModel):
 
 class UpdateItemQuantityRequest(BaseModel):
     item_id: UUID
-    item_type: str
+    item_type: Literal["product", "event"]
     new_quantity: int
