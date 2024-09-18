@@ -30,16 +30,18 @@ def create_product(
 def create_event(
     event_id: UUID | None = None,
     price: int = 2000,
+    stock: int = 50,
     name: str = "Mentoría Desarrollo Personal",
     thumbnail: str = "image.jpg",
     description: str = "Eleva tu mente.",
     organizer: str = "John Soto",
-    event_date: datetime = datetime.now(),
+    event_date: datetime | None = None,
     venue: str = "Cali, Colombia",
 ) -> Event:
     return Event(
         id=event_id if event_id else uuid4(),
         price=price,
+        stock=stock,
         name=name,
         thumbnail=thumbnail,
         description=description,
