@@ -7,8 +7,8 @@ from app.drivers.rest.dependencies import (
     get_created_event_use_case,
 )
 from app.drivers.rest.routers.schema import EventCreate, EventOutput
-from app.use_cases.create_event_use_case import CreateEventUseCase
-from app.use_cases.get_all_events_use_case import GetAllEventsUseCase
+from app.use_cases.event.create_event_use_case import CreateEventUseCase
+from app.use_cases.event.get_all_events_use_case import GetAllEventsUseCase
 
 router = APIRouter(prefix="/events")
 

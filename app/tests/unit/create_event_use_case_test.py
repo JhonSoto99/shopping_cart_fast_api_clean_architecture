@@ -3,14 +3,8 @@ from datetime import datetime
 import pytest
 
 from app.tests.utils import create_event
-from app.use_cases.create_event_use_case import CreateEventUseCase
-from app.use_cases.exceptions import (
-    EmptyBrandError,
-    EmptyProductNameError,
-    InvalidProductPriceError,
-    NegativeStockError,
-    NonPositiveWeightError,
-)
+from app.use_cases.event.create_event_use_case import CreateEventUseCase
+from app.use_cases.exceptions import InvalidProductPriceError
 
 
 @pytest.mark.asyncio

@@ -1,14 +1,11 @@
-from typing import Annotated, List, Union
-from uuid import UUID
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
 
-from app.domain.enitities.cart import CartItem, ShoppingCart
-from app.domain.enitities.item import Event, Product
+from app.domain.enitities.item import Product
 from app.drivers.rest.dependencies import (
     get_create_item_to_cart_use_case,
     get_delete_item_to_cart_use_case,
-    get_shopping_cart_repository,
     get_shopping_cart_use_case,
     get_update_item_quantity_use_case,
 )
@@ -19,12 +16,18 @@ from app.drivers.rest.routers.schema import (
     ShoppingCartOutput,
     UpdateItemQuantityRequest,
 )
-from app.use_cases.add_item_to_cart_case_use import CreateCartUseCase
-from app.use_cases.create_product_use_case import CreateProductUseCase
-from app.use_cases.delete_item_cart_case_use import DeleteItemCartUseCase
-from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
-from app.use_cases.get_shopping_cart_case_use import GetShoppingCartUseCase
-from app.use_cases.update_item_cart_case_use import UpdateItemQuantityUseCase
+from app.use_cases.shopping_cart.add_item_to_cart_case_use import (
+    CreateCartUseCase,
+)
+from app.use_cases.shopping_cart.delete_item_cart_case_use import (
+    DeleteItemCartUseCase,
+)
+from app.use_cases.shopping_cart.get_shopping_cart_case_use import (
+    GetShoppingCartUseCase,
+)
+from app.use_cases.shopping_cart.update_item_cart_case_use import (
+    UpdateItemQuantityUseCase,
+)
 
 router = APIRouter(prefix="/shopping-cart")
 

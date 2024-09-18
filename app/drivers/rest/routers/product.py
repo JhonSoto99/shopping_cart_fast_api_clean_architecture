@@ -1,5 +1,4 @@
 from typing import Annotated, List
-from uuid import UUID
 
 from fastapi import APIRouter, Depends, status
 
@@ -8,8 +7,10 @@ from app.drivers.rest.dependencies import (
     get_created_product_use_case,
 )
 from app.drivers.rest.routers.schema import ProductCreate, ProductOutput
-from app.use_cases.create_product_use_case import CreateProductUseCase
-from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
+from app.use_cases.products.create_product_use_case import CreateProductUseCase
+from app.use_cases.products.get_all_products_use_case import (
+    GetAllProductsUseCase,
+)
 
 router = APIRouter(prefix="/products")
 

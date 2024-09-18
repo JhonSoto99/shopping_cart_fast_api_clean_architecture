@@ -11,8 +11,8 @@ from app.adapters.repositories.product_repository.in_memory_repository import (
 )
 from app.ports.repositories.event_repository import EventRepository
 from app.ports.repositories.product_repository import ProductRepository
-from app.use_cases.create_event_use_case import CreateEventUseCase
 from app.use_cases.create_product_use_case import CreateProductUseCase
+from app.use_cases.event.create_event_use_case import CreateEventUseCase
 
 
 @pytest.fixture(scope="session")

@@ -13,18 +13,27 @@ from app.adapters.repositories.product_repository.mongodb_repository import (
 from app.adapters.repositories.shopping_cart_repository.in_memory_repository import (
     InMemoryShoppingCartRepository,
 )
-from app.domain.enitities.item import Product
 from app.ports.repositories.cart_repository import ShoppingCartRepository
 from app.ports.repositories.event_repository import EventRepository
 from app.ports.repositories.product_repository import ProductRepository
-from app.use_cases.add_item_to_cart_case_use import CreateCartUseCase
-from app.use_cases.create_event_use_case import CreateEventUseCase
-from app.use_cases.create_product_use_case import CreateProductUseCase
-from app.use_cases.delete_item_cart_case_use import DeleteItemCartUseCase
-from app.use_cases.get_all_events_use_case import GetAllEventsUseCase
-from app.use_cases.get_all_products_use_case import GetAllProductsUseCase
-from app.use_cases.get_shopping_cart_case_use import GetShoppingCartUseCase
-from app.use_cases.update_item_cart_case_use import UpdateItemQuantityUseCase
+from app.use_cases.event.create_event_use_case import CreateEventUseCase
+from app.use_cases.event.get_all_events_use_case import GetAllEventsUseCase
+from app.use_cases.products.create_product_use_case import CreateProductUseCase
+from app.use_cases.products.get_all_products_use_case import (
+    GetAllProductsUseCase,
+)
+from app.use_cases.shopping_cart.add_item_to_cart_case_use import (
+    CreateCartUseCase,
+)
+from app.use_cases.shopping_cart.delete_item_cart_case_use import (
+    DeleteItemCartUseCase,
+)
+from app.use_cases.shopping_cart.get_shopping_cart_case_use import (
+    GetShoppingCartUseCase,
+)
+from app.use_cases.shopping_cart.update_item_cart_case_use import (
+    UpdateItemQuantityUseCase,
+)
 
 
 @lru_cache
