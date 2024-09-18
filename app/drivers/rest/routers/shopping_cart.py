@@ -32,7 +32,7 @@ router = APIRouter(prefix="/shopping-cart")
 @router.post(
     "/add-item",
     status_code=status.HTTP_204_NO_CONTENT,
-    tags=["Carrito de Compras"]
+    tags=["Carrito de Compras"],
 )
 async def add_item(
     data: AddItemToCartRequest,
@@ -43,11 +43,7 @@ async def add_item(
     await use_case(data.item_id, data.item_type, data.quantity)
 
 
-@router.get(
-    "/get",
-    status_code=status.HTTP_200_OK,
-    tags=["Carrito de Compras"]
-)
+@router.get("/get", status_code=status.HTTP_200_OK, tags=["Carrito de Compras"])
 async def get_shopping_cart(
     use_case: Annotated[
         GetShoppingCartUseCase, Depends(get_shopping_cart_use_case)
@@ -73,7 +69,7 @@ async def get_shopping_cart(
 @router.patch(
     "/update-item-quantity",
     status_code=status.HTTP_204_NO_CONTENT,
-    tags=["Carrito de Compras"]
+    tags=["Carrito de Compras"],
 )
 async def update_item_quantity(
     data: UpdateItemQuantityRequest,
@@ -87,7 +83,7 @@ async def update_item_quantity(
 @router.delete(
     "/remove-item",
     status_code=status.HTTP_204_NO_CONTENT,
-    tags=["Carrito de Compras"]
+    tags=["Carrito de Compras"],
 )
 async def remove_item(
     data: DeleteItemFromCartRequest,

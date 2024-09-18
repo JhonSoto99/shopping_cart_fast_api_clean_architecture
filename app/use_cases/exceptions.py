@@ -23,6 +23,22 @@ class EmptyProductNameError(CustomError):
         return "The product name must not be empty."
 
 
+class EmptyProductThumbnailError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "The product thumbnail must not be empty."
+
+
+class EmptyProductDescriptionError(CustomError):
+    def __init__(self):
+        pass
+
+    def __str__(self) -> str:
+        return "The product description must not be empty."
+
+
 class NegativeStockError(CustomError):
     def __init__(self):
         pass

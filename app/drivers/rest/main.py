@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
+from app.drivers.rest.constants.values import API_V1_PREFIX
 from app.drivers.rest.exception_handlers import exception_container
 from app.drivers.rest.routers import event, product, shopping_cart
-from app.drivers.rest.constants.values import API_V1_PREFIX
 
 app = FastAPI(
     docs_url="/api/docs",

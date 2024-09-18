@@ -6,6 +6,8 @@ from app.use_cases.exceptions import (
     InvalidProductPriceError,
     NegativeStockError,
     NonPositiveWeightError,
+    EmptyProductThumbnailError,
+    EmptyProductDescriptionError
 )
 
 
@@ -19,6 +21,12 @@ class CreateProductUseCase:
 
         if not product.name:
             raise EmptyProductNameError()
+
+        if not product.thumbnail:
+            raise EmptyProductThumbnailError()
+
+        if not product.description:
+            raise EmptyProductDescriptionError()
 
         if product.stock < 0:
             raise NegativeStockError()

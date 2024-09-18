@@ -15,9 +15,7 @@ router = APIRouter(prefix="/products")
 
 
 @router.post(
-    "/create",
-    status_code=status.HTTP_204_NO_CONTENT,
-    tags=["Productos"]
+    "/create", status_code=status.HTTP_204_NO_CONTENT, tags=["Productos"]
 )
 async def create_product(
     data: ProductCreate,
@@ -32,7 +30,7 @@ async def create_product(
     "/",
     response_model=List[ProductOutput],
     status_code=status.HTTP_200_OK,
-    tags=["Productos"]
+    tags=["Productos"],
 )
 async def get_products(
     use_case: Annotated[
