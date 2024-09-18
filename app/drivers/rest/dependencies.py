@@ -38,7 +38,7 @@ from app.use_cases.shopping_cart.update_item_cart_case_use import (
 
 @lru_cache
 def get_mongo_client() -> AsyncIOMotorClient:
-    return AsyncIOMotorClient("mongodb://localhost:27017")
+    return AsyncIOMotorClient("mongodb://mongo-events:27017")
 
 
 def get_product_repository(

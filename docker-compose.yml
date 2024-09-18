@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - '8080:80'
+    env_file:
+      - .env
+    depends_on:
+      - mongo-events
+      - mongo-products
+
+  mongo-events:
+    image: mongo:7.0.6
+    container_name: mongo-events
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-events-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-products:
+    image: mongo:7.0.6
+    container_name: mongo-products
+    ports:
+      - '27018:27018'
+    volumes:
+      - mongo-products-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo-events-data:
+  mongo-products-data:
