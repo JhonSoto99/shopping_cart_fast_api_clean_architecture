@@ -1,8 +1,10 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
-
+from fastapi import APIRouter, HTTPException, Response
 from app.domain.enitities.item import Product
+from app.domain.enitities.cart import ShoppingCart
+from app.services.pdf_service import generate_pdf_from_cart
 from app.drivers.rest.constants.values import STATUS_CODE_MESSAGES
 from app.drivers.rest.dependencies import (
     get_create_item_to_cart_use_case,
@@ -383,3 +385,76 @@ async def remove_item(
     ```
     """
     await use_case(data.item_id, data.item_type)
+
+
+@router.post(
+    "/generate-pdf/",
+    status_code=status.HTTP_200_OK,
+    tags=["Servicios"],
+    responses={
+        200: {
+            "description": STATUS_CODE_MESSAGES[200],
+            "content": {
+                "application/json": {
+                    "example": {
+
+                    }
+                }
+            },
+        },
+        500: {
+            "description": STATUS_CODE_MESSAGES[500],
+            "content": {
+                "application/json": {"example": {"message": "Data error"}}
+            },
+        },
+    },
+)
+async def generate_pdf_endpoint(
+    use_case: Annotated[
+        GetShoppingCartUseCase, Depends(get_shopping_cart_use_case)
+    ]
+):
+    """
+    Recurso para generar una factura para el
+    carrito de compras.
+
+    **Request Parameters:**
+
+    **Responses:**
+    - **200**: Se generó exitosamente.
+    - **500**: Error interno del servidor.
+
+    **Example Successful (200):**
+    ```json
+    {}
+    ```
+
+    **Example Internal Server Error Response (500):**
+    ```json
+    {
+        "message": "Data error"
+    }
+    ```
+    """
+    shopping_cart = await use_case()
+
+    items = [
+        CartItemOutput(
+            item=item,
+            item_id=item.id,
+            name=item.name,
+            quantity=item.quantity,
+            item_type="Product" if isinstance(item, Product) else "Event",
+            price=item.price,
+        )
+        for item in shopping_cart.items
+    ]
+
+    shopping_cart = ShoppingCartOutput(items=items)
+
+    try:
+        pdf_data = generate_pdf_from_cart(shopping_cart)
+        return Response(content=pdf_data, media_type='application/pdf', headers={"Content-Disposition": "attachment; filename=factura.pdf"})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

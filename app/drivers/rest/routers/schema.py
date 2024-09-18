@@ -94,6 +94,13 @@ class ShoppingCartOutput(BaseModel):
     class Config:
         orm_mode = True
 
+    def calculate_totals(self):
+        total = 0
+        for item in self.items:
+            item.subtotal = item.quantity * item.price
+            total += item.subtotal
+        return total
+
 
 class AddItemToCartRequest(BaseModel):
     item_id: UUID
