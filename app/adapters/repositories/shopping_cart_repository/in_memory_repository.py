@@ -2,7 +2,6 @@ from typing import Optional
 from uuid import UUID
 
 from app.domain.enitities.cart import CartItem, ShoppingCart
-from app.drivers.rest.routers.schema import ShoppingCartOutput
 from app.ports.repositories.cart_repository import ShoppingCartRepository
 from app.ports.repositories.event_repository import EventRepository
 from app.ports.repositories.product_repository import ProductRepository

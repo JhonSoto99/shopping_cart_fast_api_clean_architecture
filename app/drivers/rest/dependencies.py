@@ -87,7 +87,6 @@ def get_shopping_cart_repository(
         ProductRepository, Depends(get_product_repository)
     ],
 ) -> InMemoryShoppingCartRepository:
-    # Inicializar o devolver un repositorio en memoria
     return InMemoryShoppingCartRepository(product_repository, event_repository)
 
 

@@ -1,7 +1,4 @@
-from typing import List
-
 from app.domain.enitities.cart import ShoppingCart
-from app.drivers.rest.routers.schema import EventOutput, ShoppingCartOutput
 from app.ports.repositories.cart_repository import ShoppingCartRepository
 
 

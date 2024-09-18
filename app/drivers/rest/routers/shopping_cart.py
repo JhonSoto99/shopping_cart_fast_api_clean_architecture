@@ -1,10 +1,8 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, status
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+
 from app.domain.enitities.item import Product
-from app.domain.enitities.cart import ShoppingCart
-from app.services.pdf_service import generate_pdf_from_cart
 from app.drivers.rest.constants.values import STATUS_CODE_MESSAGES
 from app.drivers.rest.dependencies import (
     get_create_item_to_cart_use_case,
@@ -19,6 +17,7 @@ from app.drivers.rest.routers.schema import (
     ShoppingCartOutput,
     UpdateItemQuantityRequest,
 )
+from app.services.pdf_service import generate_pdf_from_cart
 from app.use_cases.shopping_cart.add_item_to_cart_case_use import (
     CreateCartUseCase,
 )
@@ -394,13 +393,7 @@ async def remove_item(
     responses={
         200: {
             "description": STATUS_CODE_MESSAGES[200],
-            "content": {
-                "application/json": {
-                    "example": {
-
-                    }
-                }
-            },
+            "content": {"application/json": {"example": {}}},
         },
         500: {
             "description": STATUS_CODE_MESSAGES[500],
@@ -413,7 +406,7 @@ async def remove_item(
 async def generate_pdf_endpoint(
     use_case: Annotated[
         GetShoppingCartUseCase, Depends(get_shopping_cart_use_case)
-    ]
+    ],
 ):
     """
     Recurso para generar una factura para el
@@ -455,6 +448,10 @@ async def generate_pdf_endpoint(
 
     try:
         pdf_data = generate_pdf_from_cart(shopping_cart)
-        return Response(content=pdf_data, media_type='application/pdf', headers={"Content-Disposition": "attachment; filename=factura.pdf"})
+        return Response(
+            content=pdf_data,
+            media_type="application/pdf",
+            headers={"Content-Disposition": "attachment; filename=factura.pdf"},
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

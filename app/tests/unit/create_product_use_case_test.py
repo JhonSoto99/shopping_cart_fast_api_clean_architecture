@@ -8,7 +8,6 @@ from app.use_cases.exceptions import (
     EmptyProductThumbnailError,
     InvalidProductPriceError,
     NegativeStockError,
-    NonPositiveWeightError,
 )
 from app.use_cases.products.create_product_use_case import CreateProductUseCase
 

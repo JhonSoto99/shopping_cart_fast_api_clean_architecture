@@ -1,6 +1,5 @@
 from uuid import UUID
 
-from app.domain.enitities.cart import CartItem
 from app.ports.repositories.cart_repository import ShoppingCartRepository
 from app.ports.repositories.event_repository import EventRepository
 from app.ports.repositories.product_repository import ProductRepository

@@ -1,13 +1,12 @@
 from uuid import UUID
 
-from app.domain.enitities.cart import CartItem
 from app.ports.repositories.cart_repository import ShoppingCartRepository
 from app.ports.repositories.event_repository import EventRepository
 from app.ports.repositories.product_repository import ProductRepository
 from app.tests.integration.repositories.mongodb_event_repository_test import (
     event_repository,
 )
-from app.use_cases.exceptions import InsufficientStockError, ItemNotFoundError
+from app.use_cases.exceptions import ItemNotFoundError
 
 
 class DeleteItemCartUseCase:

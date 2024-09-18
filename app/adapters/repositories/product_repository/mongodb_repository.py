@@ -1,8 +1,7 @@
-from abc import ABC
-from typing import Any, List, Optional
+from typing import Any, List
 from uuid import UUID
 
-from bson import Binary, ObjectId
+from bson import Binary
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import PyMongoError
 

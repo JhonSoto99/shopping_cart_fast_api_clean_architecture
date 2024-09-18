@@ -3,7 +3,6 @@ from typing import Optional
 from uuid import UUID
 
 from app.domain.enitities.cart import CartItem, ShoppingCart
-from app.drivers.rest.routers.schema import ShoppingCartOutput
 
 
 class ShoppingCartRepository(ABC):
