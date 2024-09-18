@@ -2,7 +2,7 @@ import pytest
 
 from app.ports.repositories.product_repository import ProductRepository
 from app.tests.utils import create_product
-from app.use_cases.create_product_use_case import CreateProductUseCase
+from app.use_cases.products.create_product_use_case import CreateProductUseCase
 from app.use_cases.products.get_all_products_use_case import (
     GetAllProductsUseCase,
 )

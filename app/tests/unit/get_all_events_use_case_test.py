@@ -1,4 +1,5 @@
 import pytest
+from black import datetime
 
 from app.ports.repositories.event_repository import EventRepository
 from app.tests.utils import create_event
@@ -18,8 +19,8 @@ async def test_get_all_events_success(
     get_all_events_use_case: GetAllEventsUseCase,
     create_event_use_case: CreateEventUseCase,
 ):
-    event1 = create_event()
-    event2 = create_event()
+    event1 = create_event(event_date=datetime.now())
+    event2 = create_event(event_date=datetime.now())
     await create_event_use_case(event1)
     await create_event_use_case(event2)
     events = await get_all_events_use_case()
